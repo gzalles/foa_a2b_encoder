@@ -21,3 +21,4 @@ If you have Octave I believe the script without the GUI will still work.
 
 # refs
 * http://pcfarina.eng.unipr.it/Public/B-format/A2B-conversion/A2B.htm
+* https://cycling74.com/forums/ambisonics-methods-for-encoding-a-format-to-b-format

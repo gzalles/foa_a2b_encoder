@@ -2,34 +2,45 @@ function A2B_encoder(FLU, FRD, BLD, BRU, filename, fs, ordering)
 % function A2B_encoder(FLU, FRD, BLD, BRU, filename, fs, ordering)
 %
 % This function will encode 4 audio files from a fist order ambisonic
-% recording to B format. A single 4 track file will be created. 
+% recording to B format. A single 4 track file will be created.
 %
 % FLU - front left up
 % FRD - front right down
 % BLD - back left down
 % BRU - back right up
-% filename - used for audiowrite (.wav) 
+% filename - used for audiowrite (.wav)
 % fs - sampling rate of the resulting audio
 % ordering - string, either 'acn' or 'fuma'
 %
-% The formula main:
+% The main formula: (type I?)
 %
 % W = FLU+FRD+BLD+BRU
 % X = FLU+FRD-BLD-BRU
 % Y = FLU-FRD+BLD-BRU
 % Z = FLU-FRD-BLD+BRU
 %
-% the script can only be used for FOA at the moment. 
+% todo:
+% the script can only be used for FOA at the moment.
+% filters (see ref)
+%
+% ref
+% http://pcfarina.eng.unipr.it/Public/B-format/A2B-conversion/A2B.htm
 
 %% some error checking stuff
 
-%force add '.wav' at the end
-filename = strcat(filename, '.wav');
+%if the length of the file string is less than or equal to 4
+if length(filename) <= 4
+    %add .wav extension
+    filename = strcat(filename, '.wav');
+    %else if extension is not .wav
+elseif ~strcmpi('.wav', filename(end-3:end))
+    error('Please use .wav as your extension.');
+end
 
-%% the main stuff 
+%% the main stuff
 
 % Measure the length of the files
-l_FLU = length(FLU); 
+l_FLU = length(FLU);
 l_FRD = length(FRD);
 l_BLD = length(BLD);
 l_BRU = length(BRU);
@@ -40,9 +51,9 @@ if (l_FLU ~= l_FRD || l_FLU ~= l_BLD || l_FLU ~= l_BRU)
     %Could select the smallest one and assume they line up.
 end
 
-%Encoding 
+%Encoding
 W = FLU + FRD + BLD + BRU; %all encompasing
-X = FLU + FRD - BLD - BRU; %front to back 
+X = FLU + FRD - BLD - BRU; %front to back
 Y = FLU - FRD + BLD - BRU; %left to right
 Z = FLU - FRD - BLD + BRU; %up and down
 
@@ -57,14 +68,14 @@ if strcmpi(ordering, 'acn')
     
     W = W * sqrt(0.5);%SN3D
     B_format_audio = [W X Y Z]; %acn
-
+    
 elseif strcmpi(ordering, 'fuma')
     
     W = W * sqrt(0.5);%MaxN (seems like for FOA norm is identical)
     B_format_audio = [W Y Z X]; %fuma
 end
 
-%% directory stuff 
+%% directory stuff
 
 %change folders
 cd b_format;

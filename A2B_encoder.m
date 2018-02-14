@@ -64,15 +64,16 @@ Y = 0.99 * Y / max(abs(W));
 Z = 0.99 * Z / max(abs(W));
 
 %select ordering
+% ref: https://ccrma.stanford.edu/software/openmixer/manual/ambisonics_mode
 if strcmpi(ordering, 'acn')
     
     W = W * sqrt(0.5);%SN3D
-    B_format_audio = [W X Y Z]; %acn
+    B_format_audio = [W Y Z X]; %acn
     
 elseif strcmpi(ordering, 'fuma')
     
     W = W * sqrt(0.5);%MaxN (seems like for FOA norm is identical)
-    B_format_audio = [W Y Z X]; %fuma
+    B_format_audio = [W X Y Z]; %fuma
 end
 
 %% directory stuff

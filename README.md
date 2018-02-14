@@ -11,14 +11,16 @@ If you have Octave I believe the script without the GUI will still work.
 ![listener](img/listener.jpg)
 
 # issues
-* have not checked yet if FuMa ordering is working.
+* no filters implemented yet
 * error check for 4 track import failed, was commented out
-* error occurs when closing import window
-* not filtered
+* error occurs when closing import window before loading file
+* normalization uncertainty
 
-# todo
-* add documentation on ACN and FuMa
+# ordering
+* ACN = [W Y Z X]
+* FuMa = [W X Y Z]
 
 # refs
 * http://pcfarina.eng.unipr.it/Public/B-format/A2B-conversion/A2B.htm
 * https://cycling74.com/forums/ambisonics-methods-for-encoding-a-format-to-b-format
+* https://ccrma.stanford.edu/software/openmixer/manual/ambisonics_mode

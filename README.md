@@ -11,10 +11,11 @@ If you have Octave I believe the script without the GUI will still work.
 ![listener](img/listener.jpg)
 
 # issues
-* no filters implemented yet
+* no equalization filters implemented yet
 * error check for 4 track import failed, was commented out
 * error occurs when closing import window before loading file
 * normalization uncertainty
+* the GUI order is wrong with the buttons, it should be FLU-1, FRD-2, BLD-3, BRU-4. Double check that the encoder script takes the files in the same order.
 
 # ordering
 * ACN = [W Y Z X]

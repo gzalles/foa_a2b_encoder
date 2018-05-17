@@ -6,9 +6,6 @@ Allows you to encode the soundfield outside a DAW. B-format files can then be us
 
 If you have Octave I believe the script without the GUI will still work. (todo)
 
-# Reference image
-![ambeo](img/ambeo.jpg)
-
 # Issues
 * No equalization filters implemented yet.
 * Error check for 4 track import failed, was commented out.

@@ -8,7 +8,6 @@ If you have Octave I believe the script without the GUI will still work.
 
 # reference images
 ![ambeo](img/ambeo.jpg)
-![listener](img/listener.jpg)
 
 # issues
 * no equalization filters implemented yet

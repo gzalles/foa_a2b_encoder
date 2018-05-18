@@ -4,10 +4,6 @@ Graphical User Interface (GUI) in Matlab for encoding soundfield recordings take
 # Why?
 Allows you to encode the soundfield outside a DAW. B-format files can then be used in Unity, WebAudio experiences or 360Videos with 3D sound. If you have Octave I believe the script without the GUI will still work. (todo) We found this easier than routing channels in a Reaper or Nuendo.
 
-<!-- # Reference images -->
-![ambeo](img/ambeo.jpg)
-![listener](img/listener.jpg)
-
 # Issues
 * No equalization filters implemented yet?
 * Error check for 4 track import failed, was commented out.

@@ -27,11 +27,11 @@ function varargout = A2B(varargin)
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
-                   'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @A2B_OpeningFcn, ...
-                   'gui_OutputFcn',  @A2B_OutputFcn, ...
-                   'gui_LayoutFcn',  [] , ...
-                   'gui_Callback',   []);
+    'gui_Singleton',  gui_Singleton, ...
+    'gui_OpeningFcn', @A2B_OpeningFcn, ...
+    'gui_OutputFcn',  @A2B_OutputFcn, ...
+    'gui_LayoutFcn',  [] , ...
+    'gui_Callback',   []);
 if nargin && ischar(varargin{1})
     gui_State.gui_Callback = str2func(varargin{1});
 end
@@ -57,6 +57,7 @@ handles.output = hObject;
 
 % Set default values here (G Zalles)
 handles.encode = 'acn';
+handles.filename = 'B_format_FOA.wav';
 
 % Update handles structure
 guidata(hObject, handles);
@@ -65,7 +66,7 @@ guidata(hObject, handles);
 % uiwait(handles.figure1);
 
 % --- Outputs from this function are returned to the command line.
-function varargout = A2B_OutputFcn(~, ~, handles) 
+function varargout = A2B_OutputFcn(~, ~, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -92,9 +93,11 @@ function encode_Callback(hObject, eventdata, handles)
 
 %check that sample rate is the same accross files
 if handles.FLU_fs ~= handles.FRD_fs || ...
-        handles.FLU_fs ~= handles.BLD_fs ...
-        || handles.FLU_fs ~= handles.BRU_fs
+        handles.FLU_fs ~= handles.BLD_fs || ...
+        handles.FLU_fs ~= handles.BRU_fs
+    
     error('All sample rates should match.');
+    
     %maybe do something different
     %if the sample rates don't match ask the user what sample rate he
     %wishes to use. (unlikely case).
@@ -105,7 +108,7 @@ FLU = handles.FLU_data;
 FRD = handles.FRD_data;
 BLD = handles.BLD_data;
 BRU = handles.BRU_data;
-filename = handles.filename; 
+filename = handles.filename;
 
 %disp error if filename string not found
 if isempty(filename);
@@ -126,6 +129,10 @@ function loadFLU_Callback(hObject, eventdata, handles)
 FILENAME_PATH = strcat(pathname, filename);
 %read
 [handles.FLU_data, handles.FLU_fs] = audioread(FILENAME_PATH);
+%check that data is mono
+if size(handles.FLU_data, 2) > 1
+    error('Please select mono file.');
+end
 %update handles structure
 guidata(hObject, handles);
 %call radio button
@@ -142,7 +149,7 @@ if size(handles.FLU_data, 2) > 0
 end
 
 %get state of button
-handles.FLU_state = get(hObject, 'Value'); 
+handles.FLU_state = get(hObject, 'Value');
 
 %update handles
 guidata(hObject, handles);
@@ -155,6 +162,10 @@ function loadBLD_Callback(hObject, eventdata, handles)
 FILENAME_PATH = strcat(pathname, filename);
 %read
 [handles.BLD_data, handles.BLD_fs] = audioread(FILENAME_PATH);
+%check that data is mono
+if size(handles.BLD_data, 2) > 1
+    error('Please select mono file.');
+end
 %update handles structure
 guidata(hObject, handles);
 %call radio button
@@ -168,7 +179,7 @@ if size(handles.BLD_data, 2) > 0
 end
 
 %get state of button
-handles.BLD_state = get(hObject, 'Value'); 
+handles.BLD_state = get(hObject, 'Value');
 guidata(hObject, handles);
 
 % --- Executes on button press in loadFRD.
@@ -179,6 +190,10 @@ function loadFRD_Callback(hObject, eventdata, handles)
 FILENAME_PATH = strcat(pathname, filename);
 %read
 [handles.FRD_data, handles.FRD_fs] = audioread(FILENAME_PATH);
+%check that data is mono
+if size(handles.FRD_data, 2) > 1
+    error('Please select mono file.');
+end
 %update handles structure
 guidata(hObject, handles);
 %call radio button
@@ -192,7 +207,7 @@ if size(handles.FRD_data, 2) > 0
 end
 
 %get state of button
-handles.FRD_state = get(hObject, 'Value'); 
+handles.FRD_state = get(hObject, 'Value');
 guidata(hObject, handles);
 
 % --- Executes on button press in loadBRU.
@@ -203,6 +218,10 @@ function loadBRU_Callback(hObject, eventdata, handles)
 FILENAME_PATH = strcat(pathname, filename);
 %read
 [handles.BRU_data, handles.BRU_fs] = audioread(FILENAME_PATH);
+%check that data is mono
+if size(handles.BRU_data, 2) > 1
+    error('Please select mono file.');
+end
 %update handles structure
 guidata(hObject, handles);
 %call radio button
@@ -216,7 +235,7 @@ if size(handles.BRU_data, 2) > 0
 end
 
 %get state of button
-handles.BRU_state = get(hObject, 'Value'); 
+handles.BRU_state = get(hObject, 'Value');
 guidata(hObject, handles);
 
 function filename_edit_Callback(hObject, eventdata, handles)
@@ -250,9 +269,9 @@ set(handles.FLUloaded, 'Value', 0);
 set(handles.BLDloaded, 'Value', 0);
 set(handles.FRDloaded, 'Value', 0);
 set(handles.BRUloaded, 'Value', 0);
+delete(hObject);
 clear;
 clc;
-%set(handles.
 
 function ordering_edit_Callback(hObject, eventdata, handles)
 % hObject    handle to ordering_edit (see GCBO)
